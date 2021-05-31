@@ -1,0 +1,6 @@
+@startuml
+
+actor :Cliente Registrado:
+actor :Cliente No Registrado:
+
+@enduml

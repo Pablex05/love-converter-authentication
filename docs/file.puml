@@ -1,0 +1,13 @@
+@startuml File class diagram
+class File {
+    - name: String
+    - file_storage: FileStorage
+    - extension: String
+    - is_empty: Boolean
+    - size: Float
+}
+
+class FileStorage{}
+
+FileStorage *-- File
+@enduml

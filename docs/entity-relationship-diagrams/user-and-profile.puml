@@ -1,0 +1,24 @@
+@startuml Entity relationship User diagram
+entity User {
+    * **id: number <<generated>>**
+    --
+    * username: text
+    * password: text
+    * email: text
+    deleted: boolean
+    activated: boolean
+    last_updated: datetime
+    last_access: datetime
+}
+
+entity Profile {
+    * **id: number <<generated>>**
+    --
+    * **user_id: number <<FK>>**
+    firstname: text
+    lastname: text
+    phone: text
+    birthday: date
+}
+User ||--|| Profile
+@enduml

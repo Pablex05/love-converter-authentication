@@ -1,0 +1,22 @@
+@startuml User and profile classes diagram
+class User {
+    - id: Integer
+    - username: String
+    - password: String
+    - email: String
+    - deleted: Boolean
+    - activated: Boolean
+    - last_updated: DateTime
+    - last_access: DateTime
+}
+
+class Profile {
+    - id: Integer
+    - user_id: User
+    - firstname: String
+    - lastname: String
+    - phone: String
+    - birthday: Date
+}
+User *-- Profile
+@enduml
