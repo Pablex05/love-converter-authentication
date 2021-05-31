@@ -1,0 +1,49 @@
+@startuml
+:(AC01) Cliente Registrado: --> (Dashboard \n CU01)
+
+(Dashboard \n CU01) --> (Iniciado Sesion \n CU02)
+(Dashboard \n CU01) --> (Registrar Usuario \n CU06)
+(Dashboard \n CU01) --> (Convertir Documentos \n CU05)
+
+(Iniciado Sesion \n CU02) <-- (Ingresar Correo \n CU07) : <<include>>
+(Iniciado Sesion \n CU02) <-- (Ingresar Contraseña \n CU04) : <<include>>
+
+(Registrar Usuario \n CU06) <-- (Ingresar Correo \n CU07) : <<include>>
+(Registrar Usuario \n CU06) <-- (Ingresar Usuario \n CU03) : <<include>>
+(Registrar Usuario \n CU06) <-- (Ingresar Contraseña \n CU04) : <<include>>
+(Registrar Usuario \n CU06) -> (Iniciado Sesion \n CU02) : <<include>>
+
+(Iniciado Sesion \n CU02) --> (Convertir Documentos \n CU05)
+(Convertir Documentos \n CU05) <-- (Ingresar Archivo) : <<include>>
+(Convertir Documentos \n CU05) <-- (Ingresar Formato) : <<include>>
+@enduml
+
+@startuml
+:(AC02) Cliente Invitado: --> (Dashboard \n CU01)
+
+(Dashboard \n CU01) --> (Iniciado Sesion \n CU02)
+(Dashboard \n CU01) --> (Registrar Usuario \n CU06)
+(Dashboard \n CU01) --> (Convertir Documentos \n CU05)
+
+(Iniciado Sesion \n CU02) <-- (Ingresar Correo \n CU07) : <<include>>
+(Iniciado Sesion \n CU02) <-- (Ingresar Contraseña \n CU04) : <<include>>
+
+
+(Registrar Usuario \n CU06) <-- (Ingresar Correo \n CU07) : <<include>>
+(Registrar Usuario \n CU06) <-- (Ingresar Usuario \n CU03) : <<include>>
+(Registrar Usuario \n CU06) <-- (Ingresar Contraseña \n CU04) : <<include>>
+(Registrar Usuario \n CU06) -> (Iniciado Sesion \n CU02) : <<include>>
+
+(Iniciado Sesion \n CU02) --> (Convertir Documentos \n CU05)
+(Convertir Documentos \n CU05) <-- (Ingresar Archivo) : <<include>>
+(Convertir Documentos \n CU05) <-- (Ingresar Formato) : <<include>>
+
+@enduml
+
+
+
+
+
+
+
+
