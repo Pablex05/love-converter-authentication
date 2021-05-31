@@ -131,7 +131,7 @@ dmypy.json
 .idea
 **.idea
 **/.idea
-/bin
-/include
-/lib
-pyvenv.cfg
+**/bin
+**/include
+**/lib
+**/pyvenv.cfg
