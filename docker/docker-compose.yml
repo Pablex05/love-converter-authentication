@@ -1,0 +1,40 @@
+version: '3'
+services:
+  app_auth:
+    image: 'auth_flask:v0.1'
+    container_name: auth
+    ports:
+      - '5555:5000'
+    networks:
+      - auth_network
+    environment:
+      - 'DEBUG=${DEBUG}'
+      - 'TESTING=${TESTING}'
+      - 'PORT=${PORT}'
+      - 'SQLALCHEMY_TRACK_MODIFICATIONS=${SQLALCHEMY_TRACK_MODIFICATIONS}'
+      - 'SQLALCHEMY_DATABASE_URI=${SQLALCHEMY_DATABASE_URI}'
+      - 'JWT_SECRET_KEY=${JWT_SECRET_KEY}'
+      - 'JWT_ACCESS_TOKEN_EXPIRES=${JWT_ACCESS_TOKEN_EXPIRES}'
+      - 'DB_NAME=${MYSQL_DATABASE}'
+      - 'DB_USERNAME=${MYSQL_USER}'
+      - 'DB_PASS=${MYSQL_PASSWORD}'
+    links:
+      - 'db:mysql'
+  db:
+    image: 'mysql:latest'
+    command: '--default-authentication-plugin=mysql_native_password'
+    container_name: mysql
+    ports:
+      - '3307:3306'
+    networks:
+      - auth_network
+    environment:
+      - 'MYSQL_DATABASE=${MYSQL_DATABASE}'
+      - 'MYSQL_USER=${MYSQL_USER}'
+      - 'MYSQL_PASSWORD=${MYSQL_PASSWORD}'
+      - 'MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}'
+    volumes:
+      - './mysql/_data:/var/lib/mysql'
+    restart: always
+networks:
+  auth_network: null
