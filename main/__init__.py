@@ -6,6 +6,7 @@ from flask_cors import CORS
 from main.config import DevelopmentConfig
 
 from main.extensions import db, jwt
+import main.controllers
 
 # Flask API RESTFUL principal initialization
 api = Api()
@@ -41,6 +42,13 @@ def create_app():
         # event.listen(db.engine, 'connect', activate_primary_keys)
         pass
     # TODO: Connect db
+
+    api.add_resource(controllers.LoginController, '/login')
+    api.add_resource(controllers.LoginController, '/register')
+    api.add_resource(controllers.UserController, '/user')
+
+    # TODO: Register blueprints from Lauta & Gianca
+    # app.register_blueprint()
 
     # Final app initialization
     api.init_app(app)
