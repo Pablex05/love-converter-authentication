@@ -7,6 +7,5 @@ app = create_app()
 # Loading app context
 app.app_context().push()
 
-# If this script is run, the db is created if not; and the app is run in an specific port
 if __name__ == '__main__':
-    app.run(debug=True, port=os.getenv('PORT'))
+    app.run(port=os.getenv('PORT'))
