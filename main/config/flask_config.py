@@ -22,10 +22,8 @@ class ProductionConfig(Config):
 
 
 class DevelopmentConfig(Config):
-    DB_SERVER = 'localhost'
     DEBUG = True
 
 
 class TestingConfig(Config):
-    DB_SERVER = 'localhost'
     DEBUG = True

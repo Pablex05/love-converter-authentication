@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from flask_restful import Api
 from flask_cors import CORS
 
-from main.config import ProductionConfig
+from main.config import DevelopmentConfig
 
 from main.extensions import db, jwt
 
@@ -24,7 +24,7 @@ def create_app():
     # Flask app initialization
     app = Flask(__name__)
 
-    app.config.from_object(ProductionConfig())
+    app.config.from_object(DevelopmentConfig())
 
     # Database initialization in Flask app
     db.init_app(app)
