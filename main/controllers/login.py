@@ -16,18 +16,13 @@ class Login(Resource):
         entered_password = str(request.get_json().get('password'))
         user = db.session.query(UserModel).filter(UserModel.email == entered_email).first_or_404()
 
-        passwords_match = user.validate_password(entered_password)
         # True value if both passwords match
-
-        if passwords_match:
-
+        if user.validate_password(entered_password):
             access_token = create_access_token(identity=user)
-
             data = {
                 "user": user_mapper.dump(user),
                 "token": access_token
             }
-
             return data, 200
         else:
             return 'You have entered wrong credentials.', 401
