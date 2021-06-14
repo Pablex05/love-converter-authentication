@@ -1,38 +1,53 @@
-from flask import flash, url_for
 from flask import redirect
-from werkzeug.utils import secure_filename
-import os.path
+from flask import request
+from flask import url_for
 from registration_form import *
 from services.mail_functions import *
+
 from app import *
 from main.models import UserModel
-from flask_login import login_required, login_user, logout_user, current_user
 
 
-@app.route('/register', methods=["POST", "GET"])
+@app.route('/register', methods=["POST"])
 def register():
-    if request.method == 'POST':
-        user = UserModel(
-            username=request.form['username'],
-            password=request.form['password'],
-            email=request.form['email']
-        )
-        db = get_db()
+    user = UserModel(
+        username=request.form['username'],
+        password=request.form['password'],
+        email=request.form['email']
+    )
 
-        assert (
-            user.username is not None and
-            user.password is not None and
-            user.email is not None,
-            'Username, password or email are required'
-        )
+    assert (user.username is not None and user.password is not None and
+            user.email is not None, 'Username, password or email are required'
+            )
 
-        if db.session.query(UserModel).filter(UserModel.username == user.username).scalar() is not None:
-            return 'username already in use', 409
+    # TODO agregar metodo para DB
+    db = get_db()
 
-        else:
-            db.session.add(user)
-            db.session.commit()
-            return redirect(url_for("auth.login"))
+    # TODO ver "validator/user" porque hace chequeo con email y no con username...
+    if db.session.query(UserModel).filter(UserModel.username == user.username).scalar() is not None:
+        return 'username already in use', 409
+
+    else:
+        db.session.add(user)
+        db.session.commit()
+        return redirect(url_for("auth.login"))
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    db = get_db()
+    user = db.session.query(UserModel).filter(UserModel.username ==
+                                              request.get_json().get('username')).first_or_404()
+
+    if user.validate_pass(request.get_json().get('password')):
+        # Todavia no hay token.
+        # access_token = create_access_token(identity=user)
+        data = '{"id":"' + str(user.id) + '","username":"' + str(
+            user.username) + '"}'  # + '","access_token":"' + access_token + '"}'
+
+        return data, 200
+    else:
+        return 'Incorrect password', 401
 
 
 """
